@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-deployment
+  labels:
+    app: express-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: express-app
+  template:
+    metadata:
+      labels:
+        app: express-app
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: express-container
+        image: <DOCKERHUB_USERNAME>/express-postgres-jwt-app:latest
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /api/users/health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/users/health
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        env:
+        - name: DATABASE_URL
+          value: "<DATABASE_URL>" # or configure via secret/configmap
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: secret
