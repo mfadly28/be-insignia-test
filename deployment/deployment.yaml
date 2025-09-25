@@ -5,7 +5,7 @@ metadata:
   labels:
     app: express-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: express-app
@@ -18,26 +18,6 @@ spec:
         - name: regcred
       containers:
       - name: express-container
-        image: <DOCKERHUB_USERNAME>/express-postgres-jwt-app:latest
+        image: webbimbelgama/express-postgres-jwt-app:latest
         ports:
         - containerPort: 3000
-        readinessProbe:
-          httpGet:
-            path: /api/users/health
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /api/users/health
-            port: 3000
-          initialDelaySeconds: 15
-          periodSeconds: 20
-        env:
-        - name: DATABASE_URL
-          value: "<DATABASE_URL>" # or configure via secret/configmap
-        - name: JWT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: jwt-secret
-              key: secret

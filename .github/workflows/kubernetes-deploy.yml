@@ -94,9 +94,9 @@ jobs:
             --docker-password="${DOCKERHUB_TOKEN}" \
             --dry-run=client -o yaml | kubectl apply -f -
 
-      - name: Apply k8s manifests (assumes you have deployment.yaml service.yaml)
+      - name: Apply k8s manifests
         run: |
-          kubectl apply -f k8s/service.yaml || true
-          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f deployment/service.yaml || true
+          kubectl apply -f deployment/deployment.yaml
           kubectl set image deployment/express-deployment express-container=${{ env.IMAGE }} --record
           kubectl rollout status deployment/express-deployment --timeout=120s
