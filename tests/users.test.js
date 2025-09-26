@@ -19,7 +19,7 @@ describe('User API', () => {
       .post('/api/users')
       .send({ name: 'Test', email: 'test@example.com', password: 'password123' });
     expect(res.statusCode).toBe(201);
-    expect(res.body).toHaveProperty('id');
+    expect(res.body.data[0]).toHaveProperty('id');
   });
 
   test('POST /api/login returns token', async () => {
@@ -27,7 +27,7 @@ describe('User API', () => {
       .post('/api/login')
       .send({ email: 'test@example.com', password: 'password123' });
     expect(res.statusCode).toBe(200);
-    expect(res.body).toHaveProperty('accessToken');
+    expect(res.body.data).toHaveProperty('accessToken');
     token = res.body.data.accessToken;
   });
 
