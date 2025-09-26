@@ -81,26 +81,26 @@ jobs:
         with:
           version: 'v1.27.0'
 
-      - name: Configure kubeconfig
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
+      # - name: Configure kubeconfig
+      #   run: |
+      #     mkdir -p $HOME/.kube
+      #     echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
+      #     chmod 600 $HOME/.kube/config
 
-      - name: Create imagePullSecret
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-        run: |
-          kubectl create secret docker-registry regcred \
-            --docker-server=https://index.docker.io/v1/ \
-            --docker-username="${DOCKERHUB_USERNAME}" \
-            --docker-password="${DOCKERHUB_TOKEN}" \
-            --dry-run=client -o yaml | kubectl apply -f -
+      # - name: Create imagePullSecret
+      #   env:
+      #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      #   run: |
+      #     kubectl create secret docker-registry regcred \
+      #       --docker-server=https://index.docker.io/v1/ \
+      #       --docker-username="${DOCKERHUB_USERNAME}" \
+      #       --docker-password="${DOCKERHUB_TOKEN}" \
+      #       --dry-run=client -o yaml | kubectl apply -f -
 
-      - name: Apply k8s manifests
-        run: |
-          kubectl apply -f deployment/service.yaml || true
-          kubectl apply -f deployment/deployment.yaml
-          kubectl set image deployment/express-deployment express-container=${{ env.IMAGE }} --record
-          kubectl rollout status deployment/express-deployment --timeout=120s
+      # - name: Apply k8s manifests
+      #   run: |
+      #     kubectl apply -f deployment/service.yaml || true
+      #     kubectl apply -f deployment/deployment.yaml
+      #     kubectl set image deployment/express-deployment express-container=${{ env.IMAGE }} --record
+      #     kubectl rollout status deployment/express-deployment --timeout=120s
