@@ -45,9 +45,9 @@ jobs:
 
       - name: Configure env for tests
         run: |
-          echo "JWT_SECRET=secret-for-insignia-test" >> .env
-          echo "JWT_EXPIRES_IN=1h" >> .env
           echo "DB_HOST=localhost" > .env
+          echo "JWT_SECRET=testsecret" >> .env
+          echo "JWT_EXPIRES_IN=1h" >> .env
           echo "DB_PORT=5432" >> .env
           echo "DB_USER=postgres" >> .env
           echo "DB_PASSWORD=postgres" >> .env
