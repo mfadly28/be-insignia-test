@@ -41,7 +41,7 @@ describe('User API', () => {
       .get('/api/users')
       .set('Authorization', `Bearer ${token}`);
     expect(res.statusCode).toBe(200);
-    expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body[0]).toHaveProperty('email', 'test@example.com');
+    expect(Array.isArray(res.body.data)).toBe(true);
+    expect(res.body.data[0]).toHaveProperty('email', 'test@example.com');
   });
 });
