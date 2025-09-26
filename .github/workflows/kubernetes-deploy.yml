@@ -16,7 +16,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: insignia_test
+          POSTGRES_DB: test_db
         ports:
           - 5432:5432
         options: >-
@@ -51,7 +51,7 @@ jobs:
           echo "DB_PORT=5432" >> .env
           echo "DB_USER=postgres" >> .env
           echo "DB_PASSWORD=postgres" >> .env
-          echo "DB_NAME=insignia_test" >> .env
+          echo "DB_NAME=test_db" >> .env
           echo "PORT=3000" >> .env
 
       - name: Run tests

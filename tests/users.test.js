@@ -1,4 +1,3 @@
-// tests/users.test.js
 const request = require('supertest');
 const app = require('../app');
 const sequelize = require('../config/database');
@@ -6,7 +5,7 @@ const User = require('../models/user');
 
 beforeAll(async () => {
   await sequelize.authenticate();
-  await sequelize.sync({ force: true }); // bersihkan DB test
+  await sequelize.sync({ force: true });
 });
 
 afterAll(async () => {
@@ -29,7 +28,7 @@ describe('User API', () => {
       .send({ email: 'test@example.com', password: 'password123' });
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty('accessToken');
-    token = res.body.accessToken;
+    token = res.body.data.accessToken;
   });
 
   test('GET /api/users requires auth', async () => {

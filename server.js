@@ -1,8 +1,7 @@
-// server.js
 require('dotenv').config();
 const app = require('./app');
 const sequelize = require('./config/database');
-const User = require('./models/user'); // ensure model loaded
+const User = require('./models/user');
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,8 +9,7 @@ const PORT = process.env.PORT || 3000;
   try {
     await sequelize.authenticate();
     console.log('Database connected.');
-    // WARNING: alter:false to avoid dropping columns; sync creates table if not exist
-    await sequelize.sync({ alter: true }); // alter:true will attempt to update schema safely
+    await sequelize.sync({ alter: true });
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
