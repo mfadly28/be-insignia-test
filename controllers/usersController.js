@@ -1,4 +1,3 @@
-// controllers/usersController.js
 const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
